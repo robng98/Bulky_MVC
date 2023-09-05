@@ -3,16 +3,19 @@ using BulkyBookWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BulkyBookWeb.DataAccess.Migrations
+namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230904181426_AddProductTableToDb")]
+    partial class AddProductTableToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,18 +77,11 @@ namespace BulkyBookWeb.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -107,8 +103,6 @@ namespace BulkyBookWeb.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
 
                     b.HasData(
@@ -116,10 +110,8 @@ namespace BulkyBookWeb.DataAccess.Migrations
                         {
                             Id = 1,
                             Author = "Author1",
-                            CategoryId = 1,
                             Description = "This is the book 1.",
                             ISBN = "978-3-1176-0555-9",
-                            ImageUrl = "",
                             ListPrice = 90.0,
                             Price = 85.0,
                             Price100 = 75.0,
@@ -130,10 +122,8 @@ namespace BulkyBookWeb.DataAccess.Migrations
                         {
                             Id = 2,
                             Author = "Author2",
-                            CategoryId = 2,
                             Description = "This is the book 2.",
                             ISBN = "978-3-1176-0555-0",
-                            ImageUrl = "",
                             ListPrice = 70.0,
                             Price = 65.0,
                             Price100 = 55.0,
@@ -144,27 +134,14 @@ namespace BulkyBookWeb.DataAccess.Migrations
                         {
                             Id = 3,
                             Author = "Author3",
-                            CategoryId = 2,
                             Description = "This is the book 3.",
                             ISBN = "978-3-1176-0555-1",
-                            ImageUrl = "",
                             ListPrice = 50.0,
                             Price = 45.0,
                             Price100 = 35.0,
                             Price50 = 40.0,
                             Title = "Book3"
                         });
-                });
-
-            modelBuilder.Entity("BulkyBook.Models.Product", b =>
-                {
-                    b.HasOne("BulkyBook.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
